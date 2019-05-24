@@ -79,6 +79,10 @@ class App extends Component{
     .catch(err=> console.log(err));
   }
 
+  onRouteChange=()=>{
+    this.setState({route:'home'});
+  }
+
   render(){
     return (
       <div className="App">
@@ -89,7 +93,7 @@ class App extends Component{
       <Navigation />
       {
       this.state.route==='signin'?
-      <Signin />:<div><Logo />
+      <Signin onRouteChange={this.onRouteChange}/>:<div><Logo />
       <Rank />
       <ImageLinkForm onInputChange={this.onInputChange} 
       onButtonSubmit={this.onButtonSubmit}/>

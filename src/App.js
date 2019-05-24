@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import Navigation from './components/Navigation/Navigation'
 import Logo from './components/Logo/Logo'
+import Signin from './components/Signin/Signin'
 import Rank from './components/Rank/Rank'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
@@ -10,7 +11,7 @@ import 'tachyons';
 import Particles from 'react-particles-js';
 
 const app = new Clarifai.App({
- apiKey: 'apiKey'
+ apiKey: '019eb72382594c56929de5fe4b3fba43'
 });
 
 const particlesOptions={
@@ -39,7 +40,8 @@ class App extends Component{
     this.state={
       input:'',
       imageUrl:'',
-      box:{}
+      box:{},
+      route:'signin'
     }
   }
 
@@ -85,11 +87,16 @@ class App extends Component{
       />
 
       <Navigation />
-      <Logo />
+      {
+      this.state.route==='signin'?
+      <Signin />:<div><Logo />
       <Rank />
       <ImageLinkForm onInputChange={this.onInputChange} 
       onButtonSubmit={this.onButtonSubmit}/>
       <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
+      </div>
+      }
+      
       </div>
       );
   }

@@ -90,7 +90,6 @@ class App extends Component{
   }
   //  console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
   onButtonSubmit=()=>{
-    console.log('button clicked');
     this.setState({imageUrl:this.state.input});
     app.models
     .predict(
@@ -106,6 +105,10 @@ class App extends Component{
           id:this.state.user.id
           })
         })
+        .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count}))
+            })
         }
       this.displayFaceBox(this.calculateFaceLocation(response))
     })
@@ -133,7 +136,8 @@ class App extends Component{
       route==='home'?
       <div>
         <Logo />
-        <Rank />
+        <Rank name={this.state.user.name}
+                entries={this.state.user.entries}/>
         <ImageLinkForm onInputChange={this.onInputChange} 
         onButtonSubmit={this.onButtonSubmit}/>
         <FaceRecognition box={box} imageUrl={imageUrl} />

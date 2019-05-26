@@ -56,13 +56,13 @@ class App extends Component{
   }
 
   loadUser=(data)=>{
-    console.log('load user called and id is '+data.id);
+    console.log('load user called and id is '+data[0].id);
     this.setState({user:{
-      id:data.id,
-      name:data.name,
-      email:data.email,
-      entries:data.entries,
-      joined: data.joined
+      id:data[0].id,
+      name:data[0].name,
+      email:data[0].email,
+      entries:data[0].entries,
+      joined: data[0].joined
     }})
   }
 

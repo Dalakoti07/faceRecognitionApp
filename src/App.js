@@ -34,11 +34,7 @@ const particlesOptions={
       }
   };
 
-class App extends Component{
-  constructor()
-  {
-    super();
-    this.state={
+const initialState={
       input:'',
       imageUrl:'',
       box:{},
@@ -52,17 +48,23 @@ class App extends Component{
         entries:0,
         joined: new Date()
       }
-    }
+}
+
+class App extends Component{
+  constructor()
+  {
+    super();
+    this.state=initialState;
   }
 
   loadUser=(data)=>{
     console.log('load user called and id is '+data[0].id);
     this.setState({user:{
-      id:data[0].id,
-      name:data[0].name,
-      email:data[0].email,
-      entries:data[0].entries,
-      joined: data[0].joined
+      id:data.id,
+      name:data.name,
+      email:data.email,
+      entries:data.entries,
+      joined: data.joined
     }})
   }
 
@@ -117,7 +119,7 @@ class App extends Component{
 
   onRouteChange=(route)=>{
     if(route==='signout')
-      {this.setState({isSignedIn:false})}
+      {this.setState(initialState)}
     else if(route==='home')
       {this.setState({isSignedIn:true})}
     this.setState({route:route});

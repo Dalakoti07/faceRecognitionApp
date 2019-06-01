@@ -30,7 +30,7 @@ class Register extends React.Component{
 		})
 		.then(response=> response.json())
 		.then(user=>{
-			if(user){
+			if(user.id){
 				this.props.loadUser(user);// props means it is defined in app.js file because that file is main file
 				this.props.onRouteChange('home');
 				}		

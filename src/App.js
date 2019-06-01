@@ -6,14 +6,9 @@ import Rank from './components/Rank/Rank'
 import Register from './components/Register/Register'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
-import Clarifai from 'clarifai';
 import './App.css';
 import 'tachyons';
 import Particles from 'react-particles-js';
-
-const app = new Clarifai.App({
- apiKey: '019eb72382594c56929de5fe4b3fba43'
-});
 
 const particlesOptions={
       "particles": {
@@ -93,20 +88,18 @@ class App extends Component{
   //  console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
   onButtonSubmit=()=>{
     this.setState({imageUrl:this.state.input});
-    app.models
-    .predict(
-      Clarifai.FACE_DETECT_MODEL, 
-      this.state.input)
+    fetch('http://localhost:3000/imageurl',{
+          method:'post',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+          input:this.state.user.input
+          })
+        })
+    .then(response=>response.json())
     .then(response=>{
       if(response){
         console.log('the id is '+this.state.user.id);
-        fetch('http://localhost:3000/image',{
-          method:'put',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({
-          id:this.state.user.id
-          })
-        })
+        
         .then(response => response.json())
             .then(count => {
               this.setState(Object.assign(this.state.user, { entries: count}))
